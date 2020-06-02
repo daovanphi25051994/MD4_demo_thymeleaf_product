@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head th:replace="/layout :: head"></head>
 <body>
 <header th:replace="/layout :: header"></header>
@@ -12,12 +12,11 @@
 <div>
     <form action="#" th:action="@{/product/edit}" th:object="${product}"
           method="POST" novalidate="novalidate">
-        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" name="id" th:value="*{id}"/>
         <div>
             <label>Name</label>
-            <input type="text" th:field="*{name}"/>
+            <input type="text" name="name" th:value="*{name}"/>
         </div>
-
         <input type="submit" value="Modify">
     </form>
 </div>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -17,21 +18,30 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("products",productService.getAllProduct() );
+    public String index(Model model) {
+        model.addAttribute("products", productService.getAllProduct());
         return "index";
     }
+
     @GetMapping("/delete/{id}")
-    public String index(@PathVariable String id, Model model){
-       productService.remove(id);
-        model.addAttribute("products",productService.getAllProduct() );
+    public String index(@PathVariable String id, Model model) {
+        productService.remove(id);
+        model.addAttribute("products", productService.getAllProduct());
         return "index";
     }
+
+    //    @GetMapping("/edit/{id}")
+//    public String moveUpdatePage(@PathVariable String id, Model model){
+//        model.addAttribute("product",productService.getProduct(id));
+//        return "edit";
+//    }
     @GetMapping("/edit/{id}")
-    public String moveUpdatePage(@PathVariable String id, Model model){
-        model.addAttribute("product",productService.getProduct(id));
-        return "edit";
+    public ModelAndView moveUpdatePage(@PathVariable String id, Model model) {
+        ModelAndView modelAndView = new ModelAndView("edit");
+        modelAndView.addObject("product", productService.getProduct(id));
+        return modelAndView;
     }
+
     @PostMapping("/product/edit")
     public String update(Product product, RedirectAttributes redirect) {
         System.out.println(product.getName());
